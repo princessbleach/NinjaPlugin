@@ -12,7 +12,7 @@
 
 ## 1. Asset Overview
 
-The Ninja Character Plugin provides a fully implemented, ready-to-use playable character for Unreal Engine 5.6.1. It includes a complete skeletal mesh, materials, locomotion system, basic combat system, and two Niagara VFX.
+The Ninja Plugin provides a fully implemented, ready-to-use playable character for Unreal Engine 5.6.1. It includes a complete skeletal mesh, materials, locomotion system, basic combat system, and two VFX.
 
 ### Features
 - **Character Asset**
@@ -29,10 +29,22 @@ The Ninja Character Plugin provides a fully implemented, ready-to-use playable c
 - **Visual Effects**
   - Sword slash Niagara effect  
   - Sprint wind-line post-process effect  
+- **Demo Level**
+  - Basic environment with on-screen text to showcase plugin.
+
+---
+  <div style="display: flex; gap: 10px;">
+  <img src="https://github.com/princessbleach/NinjaPlugin/blob/main/locomotion.gif?raw=true" width="400"/>
+  <img src="https://github.com/princessbleach/NinjaPlugin/blob/main/attack.gif?raw=true" width="400"/>
+</div>
+
+*Figure 1 and 2. Demo of Locomotion and Sword Attacks.*
+
 
 ---
 
-## 2. Integration Guide
+
+## 2. How to Install
 
 ### 2.1 Installing the Plugin
 1. Place the plugin folder into:  
@@ -40,13 +52,14 @@ The Ninja Character Plugin provides a fully implemented, ready-to-use playable c
 2. Launch or restart Unreal Engine.  
 3. Enable the plugin via:  
    **Edit → Plugins → Installed → Ninja Character Plugin**
+4. If you do not have this folder, create one.
 
 ### 2.2 Adding the Character to a Level
 1. Navigate to:  
-   `Plugins/NinjaCharacter/Blueprints/`
-2. Drag **BP_NinjaCharacter** into the level.  
-3. (Optional) Set the character as the default pawn:  
-   **Project Settings → Maps & Modes → Default Pawn Class → BP_NinjaCharacter**
+   `Plugins/NinjaPlugin/Ninja`
+2. Drag **BP_Ninja** into the level.  
+3. Set the character as the default pawn:  
+   **Project Settings → Maps & Modes → Default Pawn Class → BP_Ninja**
 
 ### 2.3 Input Requirements
 The plugin uses the following input mappings:
@@ -70,70 +83,138 @@ Editable inside **BP_NinjaCharacter**:
 
 ## 3. Customization Guide
 
-### 3.1 Materials
+### Input
+
+If you wish to change the input key binds, navigate to the `Input` folder and then `IMC_Default`. Here you can change them.
+
+### Material Instances
+
+**Slash VFX Customization**
+ 
+User parameters can be found for opacity power and colour. 
+
+
+**Sprint Post Process Material**
+
 Material Instances are included for adjusting:
-- Base colour  
-- Roughness  
-- Metallic values  
+- Intensity
+- Alpha
+- Radius
+- Density
 
-### 3.2 Locomotion Tuning
-Editable character movement variables:
-- Max walk speed  
-- Sprint speed multiplier  
-- Jump Z velocity  
-- Dodge launch strength  
 
-### 3.3 Combat Adjustments
-- Combo windows controlled via animation notifies  
-- Attack animations can be swapped or extended  
-- Sword slash effect has parameters for:
-  - Opacity  
-  - Colour  
-  - Lifetime  
 
-### 3.4 VFX Customization
-**Sword Slash (Niagara):**
-- User parameters for scale, colour, lifetime  
+<img src="https://github.com/princessbleach/NinjaPlugin/blob/main/Screenshot%202025-11-24%20135719.png?raw=true" width="600">
 
-**Sprint Wind Lines:**
-- Editable intensity  
-- Blend in/out duration  
-- Colour tint  
+*Figure 3. Global Parameters Example.*
+
+The parameters can be found in **Global Scalar Parameter Values**
+Both material instances can be found in the `Instances` folder in `FX`.
+
+
 
 ---
 
-## 4. Technical Documentation
+## 4. How the Logic Works
 
-### 4.1 Locomotion System
-Implemented through an Animation Blueprint using:
-- A movement blendspace (idle → walk → run)  
-- Sprint state override  
-- Jump start, loop, and land states  
-- Dodge state triggered via input and root-motion curve  
 
-Transitions use:
-- Character velocity  
-- IsFalling boolean  
-- Sprinting and dodging boolean variables  
+### Locomotion System
+The locomotion system is built using a standard state machine with states for:
+- Idle / Walk / Run
+- Sprint
+- Jump (Start → Loop → End)
+- Dodge / Roll
 
-### 4.2 Combat System
-Blueprint logic handles:
-- Weapon state (equipped / unequipped)  
-- Attack montage playback  
-- Combo progression triggered within notify windows  
-- Shuriken throw: animation only  
+The Ninja BP sets simple conditions:
+- Sprint activates when the Sprint input is held and the character is not dodging.
+- Jump triggers when the character becomes airborne.
+- Dodge triggers a short forward launch and temporarily disables input so the movement cannot be interrupted.
 
-### 4.3 Niagara Effects
-**Sword Slash**
-- Ribbon or sprite-based slash emitted from sword socket  
-- Triggered by an animation notify  
-- Controlled via exposed parameter set  
-
-**Sprint Wind-Line Effect**
-- Niagara + post-process material  
-- Enabled only during sprint  
-- Smooth fade-out when sprint ends  
+Layered Blend per Bone is used to allow the upper body to play separate animations (holding the sword or attacking) while the lower body continues normal locomotion. This is done within the animation blueprint.
 
 ---
 
-## End of Document
+### Sprint System
+The sprint input triggers:
+- A speed increase (600 → 900)
+- The sprint post-process effect (wind lines)
+
+When the input is released:
+- Speed returns to normal
+- The post-process effect is faded out
+
+The logic simply checks if the character is dodging; if not, sprinting becomes active.
+
+---
+
+### Dodge / Roll
+Pressing the dodge key:
+- Triggers the dodge animation
+- Launches the character forward by a fixed amount
+- Disables input briefly so the animation and movement play cleanly
+- Re-enables input at the end
+
+This was implemented in this way as the animation does not have root motion. If you wish to use a root motion roll animation, the launch character node can be removed as this is to accommodate the location without root motion.
+The logic also prevents dodging while sprinting or performing other actions.
+
+---
+
+### Combat System (Light Combo)
+
+The combat system is within an actor component connected to the Ninja BP.
+
+The attack input follows a simple two-step combo logic:
+1. **First click** → plays Attack 1
+2. **Second click within the combo window** → plays Attack 2
+
+Blueprint logic checks:
+- Is the sword equipped?
+- Is the character already attacking?
+- What the current combo count is
+
+A short timer resets the combo if the player does not continue it.
+An animation notify is used within the montages to create an attack window.
+
+---
+
+### Weapon Equip System
+Pressing Equip toggles the weapon:
+
+- If unequipped → a sword actor is spawned and attached to the hand socket
+- If equipped → the existing sword actor is destroyed
+
+A boolean is used in the AnimBP to switch between normal locomotion and the “holding sword” upper-body pose.
+
+---
+
+### Shuriken Throw (Animation Only)
+The right-click input checks that the character is not sprinting or dodging.
+
+If allowed:
+- A shuriken-throw animation montage plays
+- A short delay resets the action state
+
+Only the animation is included — no projectile logic.
+
+---
+
+### VFX
+
+**Sprint PPM**
+A simple post-process material is used to generate directional lines while sprinting:
+
+- A panning texture and gradient mask create the streak effect
+- A single **Alpha** parameter controls visibility
+- Alpha is driven by the sprint blueprint (1.0 when sprinting, 0 when not)
+
+
+**Sword Slash VFX**
+- Spawns during attack animations via notify
+- Attached from the sword base to sword tip sockets. 
+- Uses exposed parameters for colour, lifetime, and scale
+
+---
+
+
+
+
