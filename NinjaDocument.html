@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Ninja Plugin &ndash; Handover Documentation</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="ninja-plugin--handover-documentation">Ninja Plugin – Handover Documentation</h1>
+<p><strong>Asset Name:</strong> Ninja Plugin<br>
+<strong>Asset Type:</strong> Playable Character System (Locomotion, Combat, VFX)<br>
+<strong>Author:</strong> Zoe Efstathiou<br>
+<strong>Contact:</strong> <a href="mailto:2423029@students.uca.ac.uk">2423029@students.uca.ac.uk</a><br>
+<strong>Client</strong> Eric Chen<br>
+<strong>Delivery Date:</strong> 25.11.2025</p>
+<hr>
+<h2 id="1-asset-overview">1. Asset Overview</h2>
+<p>The Ninja Plugin provides a fully implemented, ready-to-use playable character for Unreal Engine 5.6.1. It includes a complete skeletal mesh, materials, locomotion system, basic combat system, and two VFX.</p>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>Character Asset</strong>
+<ul>
+<li>Ninja skeletal mesh and materials</li>
+<li>Weapon socket setup</li>
+</ul>
+</li>
+<li><strong>Locomotion System</strong>
+<ul>
+<li>Idle, walk, run, sprint</li>
+<li>Jump</li>
+<li>Dodge / roll</li>
+</ul>
+</li>
+<li><strong>Combat System</strong>
+<ul>
+<li>Equip / unequip sword</li>
+<li>Single attack + combo continuation</li>
+<li>Shuriken throw animation (no projectile logic included)</li>
+</ul>
+</li>
+<li><strong>Visual Effects</strong>
+<ul>
+<li>Sword slash Niagara effect</li>
+<li>Sprint wind-line post-process effect</li>
+</ul>
+</li>
+<li><strong>Demo Level</strong>
+<ul>
+<li>Basic environment with on-screen text to showcase plugin.</li>
+</ul>
+</li>
+</ul>
+<hr>
+  <div style="display: flex; gap: 10px;">
+  <img src="https://github.com/princessbleach/NinjaPlugin/blob/main/locomotion.gif?raw=true" width="400"/>
+  <img src="https://github.com/princessbleach/NinjaPlugin/blob/main/attack.gif?raw=true" width="400"/>
+</div>
+<p><em>Figure 1 and 2. Demo of Locomotion and Sword Attacks.</em></p>
+<hr>
+<h2 id="2-how-to-install">2. How to Install</h2>
+<h3 id="21-installing-the-plugin">2.1 Installing the Plugin</h3>
+<ol>
+<li>Place the plugin folder into:<br>
+<code>YourProject/Plugins/</code></li>
+<li>Launch or restart Unreal Engine.</li>
+<li>Enable the plugin via:<br>
+<strong>Edit → Plugins → Installed → Ninja Character Plugin</strong></li>
+<li>If you do not have this folder, create one.</li>
+</ol>
+<h3 id="22-adding-the-character-to-a-level">2.2 Adding the Character to a Level</h3>
+<ol>
+<li>Navigate to:<br>
+<code>Plugins/NinjaPlugin/Ninja</code></li>
+<li>Drag <strong>BP_Ninja</strong> into the level.</li>
+<li>Set the character as the default pawn:<br>
+<strong>Project Settings → Maps &amp; Modes → Default Pawn Class → BP_Ninja</strong></li>
+<li>Set the player controller:<br>
+<strong>Project Settings → Maps &amp; Modes → Player Controller Class → PlayerController</strong></li>
+</ol>
+<h3 id="23-input-requirements">2.3 Input Requirements</h3>
+<p>The plugin uses the following input mappings:</p>
+<ul>
+<li><strong>WASD</strong> – Movement</li>
+<li><strong>Space</strong> – Jump</li>
+<li><strong>Left Shift</strong> – Sprint</li>
+<li><strong>Q</strong> – Dodge</li>
+<li><strong>E</strong> – Equip / Unequip</li>
+<li><strong>Left Mouse Button</strong> – Attack</li>
+<li><strong>Right Mouse Button</strong> – Shuriken Throw Animation</li>
+</ul>
+<h3 id="24-exposed-parameters">2.4 Exposed Parameters</h3>
+<p>Editable inside <strong>BP_NinjaCharacter</strong>:</p>
+<ul>
+<li>Walk/run/sprint speeds</li>
+<li>Dodge distance</li>
+<li>Combo timing values</li>
+<li>Slash VFX intensity</li>
+<li>Sprint wind-line post-process intensity</li>
+</ul>
+<hr>
+<h2 id="3-customization-guide">3. Customization Guide</h2>
+<h3 id="input">Input</h3>
+<p>If you wish to change the input key binds, navigate to the <code>Input</code> folder and then <code>IMC_Default</code>. Here you can change them.</p>
+<h3 id="material-instances">Material Instances</h3>
+<p><strong>Slash VFX Customization</strong></p>
+<p>User parameters can be found for opacity power and colour.</p>
+<p><strong>Sprint Post Process Material</strong></p>
+<p>Material Instances are included for adjusting:</p>
+<ul>
+<li>Intensity</li>
+<li>Alpha</li>
+<li>Radius</li>
+<li>Density</li>
+</ul>
+<img src="https://github.com/princessbleach/NinjaPlugin/blob/main/Screenshot%202025-11-24%20135719.png?raw=true" width="600">
+<p><em>Figure 3. Global Parameters Example.</em></p>
+<p>The parameters can be found in <strong>Global Scalar Parameter Values</strong>
+Both material instances can be found in the <code>Instances</code> folder in <code>FX</code>.</p>
+<hr>
+<h2 id="4-how-the-logic-works">4. How the Logic Works</h2>
+<h3 id="locomotion-system">Locomotion System</h3>
+<p>The locomotion system is built using a standard state machine with states for:</p>
+<ul>
+<li>Idle / Walk / Run</li>
+<li>Sprint</li>
+<li>Jump (Start → Loop → End)</li>
+<li>Dodge / Roll</li>
+</ul>
+<p>The Ninja BP sets simple conditions:</p>
+<ul>
+<li>Sprint activates when the Sprint input is held and the character is not dodging.</li>
+<li>Jump triggers when the character becomes airborne.</li>
+<li>Dodge triggers a short forward launch and temporarily disables input so the movement cannot be interrupted.</li>
+</ul>
+<p>Layered Blend per Bone is used to allow the upper body to play separate animations (holding the sword or attacking) while the lower body continues normal locomotion. This is done within the animation blueprint.</p>
+<hr>
+<h3 id="sprint-system">Sprint System</h3>
+<p>The sprint input triggers:</p>
+<ul>
+<li>A speed increase (600 → 900)</li>
+<li>The sprint post-process effect (wind lines)</li>
+</ul>
+<p>When the input is released:</p>
+<ul>
+<li>Speed returns to normal</li>
+<li>The post-process effect is faded out</li>
+</ul>
+<p>The logic simply checks if the character is dodging; if not, sprinting becomes active.</p>
+<hr>
+<h3 id="dodge--roll">Dodge / Roll</h3>
+<p>Pressing the dodge key:</p>
+<ul>
+<li>Triggers the dodge animation</li>
+<li>Launches the character forward by a fixed amount</li>
+<li>Disables input briefly so the animation and movement play cleanly</li>
+<li>Re-enables input at the end</li>
+</ul>
+<p>This was implemented in this way as the animation does not have root motion. If you wish to use a root motion roll animation, the launch character node can be removed as this is to accommodate the location without root motion.
+The logic also prevents dodging while sprinting or performing other actions.</p>
+<hr>
+<h3 id="combat-system-light-combo">Combat System (Light Combo)</h3>
+<p>The combat system is within an actor component connected to the Ninja BP.</p>
+<p>The attack input follows a simple two-step combo logic:</p>
+<ol>
+<li><strong>First click</strong> → plays Attack 1</li>
+<li><strong>Second click within the combo window</strong> → plays Attack 2</li>
+</ol>
+<p>Blueprint logic checks:</p>
+<ul>
+<li>Is the sword equipped?</li>
+<li>Is the character already attacking?</li>
+<li>What the current combo count is</li>
+</ul>
+<p>A short timer resets the combo if the player does not continue it.
+An animation notify is used within the montages to create an attack window.</p>
+<hr>
+<h3 id="weapon-equip-system">Weapon Equip System</h3>
+<p>Pressing Equip toggles the weapon:</p>
+<ul>
+<li>If unequipped → a sword actor is spawned and attached to the hand socket</li>
+<li>If equipped → the existing sword actor is destroyed</li>
+</ul>
+<p>A boolean is used in the AnimBP to switch between normal locomotion and the “holding sword” upper-body pose.</p>
+<hr>
+<h3 id="shuriken-throw-animation-only">Shuriken Throw (Animation Only)</h3>
+<p>The right-click input checks that the character is not sprinting or dodging.</p>
+<p>If allowed:</p>
+<ul>
+<li>A shuriken-throw animation montage plays</li>
+<li>A short delay resets the action state</li>
+</ul>
+<p>Only the animation is included — no projectile logic.</p>
+<hr>
+<h3 id="vfx">VFX</h3>
+<p><strong>Sprint PPM</strong>
+A simple post-process material is used to generate directional lines while sprinting:</p>
+<ul>
+<li>A panning texture and gradient mask create the streak effect</li>
+<li>A single <strong>Alpha</strong> parameter controls visibility</li>
+<li>Alpha is driven by the sprint blueprint (1.0 when sprinting, 0 when not)</li>
+</ul>
+<p><strong>Sword Slash VFX</strong></p>
+<ul>
+<li>Spawns during attack animations via notify</li>
+<li>Attached from the sword base to sword tip sockets.</li>
+<li>Uses exposed parameters for colour, lifetime, and scale</li>
+</ul>
+<hr>
+
+            
+            
+        </body>
+        </html>
