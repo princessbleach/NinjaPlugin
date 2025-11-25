@@ -60,6 +60,8 @@ The Ninja Plugin provides a fully implemented, ready-to-use playable character f
 2. Drag **BP_Ninja** into the level.  
 3. Set the character as the default pawn:  
    **Project Settings → Maps & Modes → Default Pawn Class → BP_Ninja**
+4. Set the player controller:  
+   **Project Settings → Maps & Modes → Player Controller Class → PlayerController**
 
 ### 2.3 Input Requirements
 The plugin uses the following input mappings:
